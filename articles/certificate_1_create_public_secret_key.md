@@ -2,7 +2,7 @@
 title: "iOSの証明書周りをイラストで読み解く 秘密鍵・公開鍵/コード署名編"
 emoji: "📝"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [iOS, Swift]
+topics: [iOS, Swift, Xcode]
 published: false
 ---
 
