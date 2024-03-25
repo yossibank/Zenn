@@ -10,6 +10,8 @@ published: true
 
 [前回](https://zenn.dev/yossibank/articles/certificate_1_create_public_secret_key)はiOSの証明書周りを理解するための秘密鍵・公開鍵/コード署名編として、コード署名の中の流れやデジタル署名、デジタル証明書の仕組みについて読み解いていきました。
 
+https://zenn.dev/yossibank/articles/certificate_1_create_public_secret_key
+
 今回はiOS開発において必要なデジタル証明書を実際に作成しながら、必要な手順を読み解いていきます。
 
 ![概要図詳細](/images/certificate/2_create_csr_certificate1.png)

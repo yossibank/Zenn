@@ -10,6 +10,8 @@ published: true
 
 [前回](https://zenn.dev/yossibank/articles/certificate_0_data_encrypt)はiOSの証明書周りを理解するための事前準備編として、データのやり取りの際に用いられるデータの暗号化、ならびに鍵について読み解いていきました。
 
+https://zenn.dev/yossibank/articles/certificate_0_data_encrypt
+
 今回は証明書の中で作成されることになる秘密鍵・公開鍵について、デジタル署名・デジタル証明書とともに読み解いていきます。
 
 ![概要図詳細](/images/certificate/1_create_public_secret_key1.png)
