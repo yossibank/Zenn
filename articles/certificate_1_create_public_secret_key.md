@@ -96,10 +96,12 @@ published: true
 
 次回は、今回登場したデジタル証明書を実際に作成しながら、必要な手順を読み解いていきます。
 
-# 参考文献
+:::details 参考
 
-[Xcode と署名](https://scrapbox.io/tasuwo-ios/Xcode_%E3%81%A8%E7%BD%B2%E5%90%8D)
+https://scrapbox.io/tasuwo-ios/Xcode_%E3%81%A8%E7%BD%B2%E5%90%8D
 
-[iOSのコード署名がなんのためにどうやって行われているかを理解する](https://qiita.com/maiyama18/items/88567365dde2a3b3cc92#%E3%82%B3%E3%83%BC%E3%83%89%E7%BD%B2%E5%90%8D%E3%81%AE%E7%99%BB%E5%A0%B4%E4%BA%BA%E7%89%A9)
+https://qiita.com/maiyama18/items/88567365dde2a3b3cc92#%E3%82%B3%E3%83%BC%E3%83%89%E7%BD%B2%E5%90%8D%E3%81%AE%E7%99%BB%E5%A0%B4%E4%BA%BA%E7%89%A9
 
-石田保輝・宮崎修一 (2017) アルゴリズム図鑑 照英社
+https://www.shoeisha.co.jp/book/detail/9784798172439
+
+:::
