@@ -96,6 +96,8 @@ published: true
 
 次回は、今回登場したデジタル証明書を実際に作成しながら、必要な手順を読み解いていきます。
 
+https://zenn.dev/yossibank/articles/certificate_2_create_csr_certificate
+
 :::details 参考
 
 https://scrapbox.io/tasuwo-ios/Xcode_%E3%81%A8%E7%BD%B2%E5%90%8D
