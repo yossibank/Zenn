@@ -1,9 +1,9 @@
 ---
-title: "iOSの証明書周りをイラストで読み解く 証明書作成編"
+title: "iOSの証明書周りをイラストで読み解く 証明書発行編"
 emoji: "📝"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [iOS, Swift, Xcode]
-published: true
+published: false
 ---
 
 # はじめに
