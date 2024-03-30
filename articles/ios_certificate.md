@@ -3,7 +3,7 @@ title: "iOSの証明書周りをイラストで読み解く"
 emoji: "📝"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [iOS, Swift, Xcode]
-published: false
+published: true
 ---
 
 # はじめに
@@ -378,9 +378,117 @@ Provisioning Profileはこれまで作成した証明書、App ID、Device IDを
 
 ![ローカルマシン現在状況](/images/certificate/build_archive2.png)
 
+アーカイブとは、アプリケーションを実行するのに必要な全てのファイルをひとまとめにするプロセスです。アーカイブによってひとまとめになったファイルは`.ipa(iOS Package Archive)`ファイル形式で生成されます。このファイルには、コード署名情報、Provisioning Profile、アプリケーションでコンパイルされた実行ファイル、リソースやその他情報ファイルなどが含まれています。
+
+このipaファイルを使って、App StoreやAd Hocでアプリケーションの配布を行います。
+
+![Xcodeアーカイブ](/images/certificate/build_archive3.png)
+
+それでは、Xcodeでビルド・アーカイブをしてみましょう。
+
+## Xcodeでビルド実行手順
+
+Xcodeで指定した端末に対してビルドを実行するには、適切なProvisioning Profileを設定します。
+
+1. ビルドしたい端末を指定
+
+![Xcodeビルド手順1](/images/certificate/build_archive4.png)
+
+2. Provisioning Profileの設定
+
+![Xcodeビルド手順2](/images/certificate/build_archive5.png)
+
+もし、Provisioning Profileの情報と異なる設定になっている場合にはここでエラーが発生します。
+
+例1) Provisioning Profileで登録したApp IDのBundle IDと異なっていた場合
+
+![Xcodeビルドエラー1](/images/certificate/build_archive6.png)
+
+例2) ローカルマシンのCode Signing Identityに秘密鍵が紐づいていなかった場合
+
+紐付いている | 紐付いていない
+:--: | :--:
+![Xcodeビルドエラー2-1](/images/certificate/build_archive7.png) | ![Xcodeビルドエラー2-2](/images/certificate/build_archive8.png)
+
+![Xcodeビルドエラー2-3](/images/certificate/build_archive9.png)
+
+## Xcodeでアーカイブ実行手順
+
+1. タブ「Product」→ Archive選択
+
+![Xcodeアーカイブ手順1](/images/certificate/build_archive10.png)
+
+2. 「Distribute App」選択
+
+![Xcodeアーカイブ手順2](/images/certificate/build_archive11.png)
+
+3. 配布用途に応じて選択(今回はDebugging)
+
+![Xcodeアーカイブ手順3](/images/certificate/build_archive12.png)
+
+4. ipaファイルのエクスポート
+
+ipa内容 | ローカルマシンに保存
+:--: | :--:
+![Xcodeアーカイブ手順4](/images/certificate/build_archive13.png) | ![Xcodeアーカイブ手順4-2](/images/certificate/build_archive14.png)
+
+ipaファイルを使うことで、Xcodeでビルドせずとも直接端末にインストールすることもできました。
+
+端末に追加 | 追加するipa選択
+:--: | :--:
+![Xcodeアーカイブ1](/images/certificate/build_archive15.png) | ![Xcodeアーカイブ2](/images/certificate/build_archive16.png)
+
+端末に追加後 | 端末
+:--: | :--:
+![Xcodeアーカイブ3](/images/certificate/build_archive17.png) | ![Xcodeアーカイブ4](/images/certificate/build_archive18.png)
+
+# TIPS
+
+## 証明書の管理
+
+チーム開発において証明書の管理は複雑になりがちです。
+
+例えば、チーム開発をしている中で新たにメンバーが入った際には、例えば以下のような対応が必要になります。
+
+対応①) 新しいメンバーの証明書、端末IDを作成、追加してProvisioning Profileを更新するパターン
+
+1. (Apple Developer Programのアカウントを作成、招待し)新しいメンバーの証明書を作成
+2. 新しいメンバーの端末のDevice IDを登録
+3. 既存のProvisioning Profileの更新(新しいメンバーの証明書、Device IDを追加)
+
+![署名書管理対応1](/images/certificate/tips1.png)
+
+対応②) 新しいメンバーにCode Signing Identity(p12)を渡し、端末IDのみを追加してProvisioning Profileを更新するパターン
+
+1. 新しいメンバーに開発メンバーがCode Signing Identity(p12)を渡す
+2. 新しいメンバーの端末のDevice IDを登録
+3. 既存のProvisioning Profileの更新(新しいメンバーのDevice IDを追加)
+
+![署名書管理対応2](/images/certificate/tips2.png)
+
+このように開発メンバーが変更するたびに、Provisioning Profileを更新する必要があるため、これらの作業を手動でやるのは非常に手間で人為的ミスが発生するリスクがあります。
+
+そのため、これらの証明書の作業はなるべく全て自動化したいものですが、これを解決したのがfastlaneのmatchになります。
+
+### fastlane match
+
+fastlane matchでは管理者が証明書周りの情報全てを管理します。GitHubのプライベートリポジトリなどで証明書(.cer)、Code Signing Identity(.p12)、Provisioning Profile(.mobileprovision)を保存し、開発者メンバーはコマンド1つで必要な証明書などの情報を取得することができます。
+
+![fastlane match](/images/certificate/tips3.png)
+
+証明書の管理は煩雑になりがちになるため、チームで開発する際には導入することで手動管理をせずに済みます。
+
+https://docs.fastlane.tools/actions/match/
+
+# おわりに
+
+証明書周りをイラストでイメージしながら実際に作成して進めてみましたが、出てくる用語に対してのイメージがしやすくなったのではないかと思います。
+
+少しでもこちらの記事が参考になれば幸いです。
+
 :::details 参考
 
-https://scrapbox.io/tasuwo-ios/Xcode_%E3%81%A8%E7%BD%B2%E5%90%8D
+https://www.shoeisha.co.jp/book/detail/9784798172439
 
 https://qiita.com/maiyama18/items/88567365dde2a3b3cc92#%E3%82%B3%E3%83%BC%E3%83%89%E7%BD%B2%E5%90%8D%E3%81%AE%E7%99%BB%E5%A0%B4%E4%BA%BA%E7%89%A9
 
@@ -388,6 +496,6 @@ https://qiita.com/fujisan3/items/d037e3c40a0acc46f618
 
 https://kumaskun.hatenablog.com/entry/2022/09/20/210919
 
-https://www.shoeisha.co.jp/book/detail/9784798172439
+https://scrapbox.io/tasuwo-ios/Xcode_%E3%81%A8%E7%BD%B2%E5%90%8D
 
 :::
