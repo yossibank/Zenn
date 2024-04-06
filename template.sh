@@ -4,7 +4,7 @@ FILENAME=${1:-new_article.md}
 # テンプレートの内容
 TEMPLATE="---
 title: \"\"
-emoji: \"\"
+emoji: \"🔨\"
 type: \"tech\" # tech: 技術記事 / idea: アイデア
 topics: [iOS, Swift, Xcode]
 published: false
